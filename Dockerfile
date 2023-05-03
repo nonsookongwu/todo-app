@@ -1,13 +1,19 @@
-FROM node:14-alpine
+FROM node:16-alpine
 
-WORKDIR /home/node/app
+WORKDIR /app
 
 COPY ./package.json .
 
-RUN yarn
+COPY yarn.lock .
 
 COPY . .
 
-RUN yarn tsc
+RUN yarn
+
+RUN yarn build 
+
+RUN NODE_ENV production
+
+EXPOSE 9000
 
 CMD ["yarn", "start"]
